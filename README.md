@@ -8,6 +8,7 @@ This repo is fork from [nrm](https://github.com/Pana/nrm)
 `nrm` can help you easy and fast switch between different npm registries.
 
 ## How to configure yarn to use private registry ?
+
 just add .yarnrc in your project’s directory and write there:
 `registry “http://your.registry”`
 
@@ -17,7 +18,7 @@ Or you can configure it in your HOME directory's .yarnrc
 ## Install
 
 ```
-$ npm install -g nrm
+$ npm install -g @lzwme/nrm
 ```
 
 ## Example
@@ -81,9 +82,8 @@ Usage: nrm [options] [command]
 
 ## Registries
 
-* [npm](https://www.npmjs.org)
+* [npm](https://www.npmjs.com)
 * [yarn](https://yarnpkg.com)
-* [cnpm](http://cnpmjs.org)
 * [taobao](https://npmmirror.com)
 * [npmMirror](https://skimdb.npmjs.com/registry/)
 
@@ -109,10 +109,11 @@ If you have the interest you can reach me through email: pana.wang@outlook.com
 ## Contributors
 
 * [EmilyMew](https://github.com/EmilyMew)
+* [renxia](https://github.com/renxia)
 
 ## LICENSE
+
 MIT
 
-
 [npm-image]: https://img.shields.io/npm/v/nrm.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/@lzwme/nrm
+[npm-url]: https://www.npmjs.com/package/@lzwme/nrm
