@@ -11,6 +11,8 @@
   },
   "scripts": {
     "star": "npm star nrm",
+    "release": "echo release",
+    "ver": "standard-version",
     "test": "jest"
   },
   "keywords": [
@@ -18,7 +20,10 @@
     "registry"
   ],
   "author": "Pana",
-  "maintainers": ["Pana", "renxia"],
+  "maintainers": [
+    "Pana",
+    "renxia"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/renxia/nrm/issues"
@@ -41,7 +46,7 @@
     "open": "^9.1.0"
   },
   "devDependencies": {
-    "coffee": "^5.5.0",
-    "jest": "^29.5.0"
+    "jest": "^29.5.0",
+    "standard-version": "^9.5.0"
   }
 }
