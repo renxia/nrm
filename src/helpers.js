@@ -1,6 +1,6 @@
 const fs = require('fs');
 const ini = require('ini');
-const chalk = require('chalk');
+const { color } = require('@lzwme/fe-utils');
 const process = require('./process');
 
 const { NRMRC, NPMRC, REGISTRY, REGISTRIES } = require('./constants');
@@ -36,11 +36,11 @@ function padding(message = '', before = 1, after = 1) {
 }
 
 function printSuccess(message) {
-  console.log(chalk.bgGreenBright(padding('SUCCESS')) + ' ' + message);
+  console.log(color.bgGreenBright(padding('SUCCESS')) + ' ' + message);
 }
 
 function printError(error) {
-  console.error(chalk.bgRed(padding('ERROR')) + ' ' + chalk.red(error));
+  console.error(color.bgRed(padding('ERROR')) + ' ' + color.red(error));
 }
 
 function printMessages(messages) {
@@ -51,7 +51,7 @@ function printMessages(messages) {
 
 function geneDashLine(message, length) {
   const finalMessage = new Array(Math.max(2, length - message.length + 2)).join('-');
-  return padding(chalk.dim(finalMessage));
+  return padding(color.dim(finalMessage));
 }
 
 function isLowerCaseEqual(str1, str2) {
@@ -68,6 +68,8 @@ async function getCurrentRegistry() {
 }
 
 async function getRegistries() {
+  // todo: merge from remote to REGISTRIES
+  // request.get('https://ghproxy.com/https://raw.githubusercontent.com/renxia/nrm/master/registries.json')
   const customRegistries = await readFile(NRMRC);
   return Object.assign({}, REGISTRIES, customRegistries);
 }

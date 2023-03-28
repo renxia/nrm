@@ -1,6 +1,4 @@
-const open = require('open');
-const chalk = require('chalk');
-const fetch = require('node-fetch');
+const { Request, color } = require('@lzwme/fe-utils');
 
 const {
   exit,
@@ -26,7 +24,7 @@ async function onList() {
 
   const messages = keys.map(key => {
     const registry = registries[key];
-    const prefix = isLowerCaseEqual(registry[REGISTRY], currentRegistry) ? chalk.green.bold('* ') : '  ';
+    const prefix = isLowerCaseEqual(registry[REGISTRY], currentRegistry) ? color.green.bold('* ') : '  ';
     return prefix + key + geneDashLine(key, length) + registry[REGISTRY];
   });
 
@@ -41,13 +39,13 @@ async function onCurrent({ showUrl }) {
     const registry = registries[name];
     if (isLowerCaseEqual(registry[REGISTRY], currentRegistry)) {
       usingUnknownRegistry = false;
-      printMessages([`You are using ${chalk.green(showUrl ? registry[REGISTRY] : name)} registry.`]);
+      printMessages([`You are using ${color.green(showUrl ? registry[REGISTRY] : name)} registry.`]);
     }
   }
   if (usingUnknownRegistry) {
     printMessages([
       `Your current registry(${currentRegistry}) is not included in the nrm registries.`,
-      `Use the ${chalk.green('nrm add <registry> <url> [home]')} command to add your registry.`,
+      `Use the ${color.green('nrm add <registry> <url> [home]')} command to add your registry.`,
     ]);
   }
 }
@@ -98,7 +96,7 @@ async function onAdd(name, url, home) {
   const customRegistries = await readFile(NRMRC);
   const newCustomRegistries = Object.assign(customRegistries, { [name]: newRegistry });
   await writeFile(NRMRC, newCustomRegistries);
-  printSuccess(`Add registry ${name} success, run ${chalk.green('nrm use ' + name)} command to use ${name} registry.`);
+  printSuccess(`Add registry ${name} success, run ${color.green('nrm use ' + name)} command to use ${name} registry.`);
 }
 
 async function onLogin(name, base64, { alwaysAuth, username, password, email }) {
@@ -183,7 +181,7 @@ async function onSetAttribute(name, { attr, value }) {
   }
 
   if (REPOSITORY === attr) {
-    return exit(`Use the ${chalk.green('nrm set-hosted-repo <name> <repo>')} command to set repository.`);
+    return exit(`Use the ${color.green('nrm set-hosted-repo <name> <repo>')} command to set repository.`);
   }
   const customRegistries = await readFile(NRMRC);
   const registry = customRegistries[name];
@@ -225,7 +223,8 @@ async function onHome(name, browser) {
   if (!registries[name][HOME]) {
     return exit(`The homepage of registry '${name}' is not found.`);
   }
-  open(registries[name][HOME], browser ? { app: { name: browser } } : undefined);
+  const open = await import('open');
+  open.default(registries[name][HOME], browser ? { app: { name: browser } } : undefined);
 }
 
 async function onTest(target) {
@@ -244,10 +243,11 @@ async function onTest(target) {
     let status = false;
     let isTimeout = false;
     try {
-      const response = await fetch(registry + 'nrm', { timeout });
-      status = response.ok;
+      const r = await Request.getInstance().get(registry + 'nrm', null, null, { timeout });
+      status = r.response.statusCode >= 200 && r.response.statusCode <= 299;
     } catch (error) {
-      isTimeout = error.type === 'request-timeout';
+      isTimeout = error.message.includes('timeout');
+      if (!isTimeout) console.log(`[error]`, color.red(error.message));
     }
     return {
       name,
@@ -262,13 +262,13 @@ async function onTest(target) {
 
   const messages = [];
   const currentRegistry = await getCurrentRegistry();
-  const errorMsg = chalk.red(' (Fetch error, if this is your private registry, please ignore)');
-  const timeoutMsg = chalk.yellow(` (Fetch timeout over ${timeout} ms)`);
+  const errorMsg = color.red(' (Fetch error, if this is your private registry, please ignore)');
+  const timeoutMsg = color.yellow(` (Fetch timeout over ${timeout} ms)`);
   const length = Math.max(...Object.keys(sources).map(key => key.length)) + 3;
   results.forEach(({ registry, success, time, name, isTimeout }) => {
     const isFastest = time === fastest;
-    const prefix = registry === currentRegistry ? chalk.green('* ') : '  ';
-    let suffix = (isFastest && !target) ? chalk.bgGreenBright(time + ' ms') : isTimeout ? 'timeout' : `${time} ms`;
+    const prefix = registry === currentRegistry ? color.green('* ') : '  ';
+    let suffix = (isFastest && !target) ? color.bgGreenBright(time + ' ms') : isTimeout ? 'timeout' : `${time} ms`;
     if (!success) {
       suffix += isTimeout ? timeoutMsg : errorMsg;
     }

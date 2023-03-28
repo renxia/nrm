@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const actions = require('./actions');
+const actions = require('./src/actions');
 const PKG = require('./package.json');
 const { program } = require('commander');
 

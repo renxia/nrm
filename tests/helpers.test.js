@@ -1,9 +1,7 @@
 const ini = require('ini');
-const chalk = require('chalk');
-
-const helpers = require('.././helpers');
-
-const { NPMRC, NRMRC, REGISTRY } = require('.././constants');
+const { color } = require('@lzwme/fe-utils');
+const helpers = require('../src/helpers');
+const { NPMRC, NRMRC, REGISTRY } = require('../src/constants');
 
 // ========== mock `fs` within helpers.js ==========
 
@@ -48,8 +46,8 @@ beforeEach(() => {
 it('geneDashLine', () => {
   const result1 = helpers.geneDashLine('taobao', 10);
   const result2 = helpers.geneDashLine('taobao', 1);
-  expect(result1).toBe(` ${chalk.dim('-----')} `);
-  expect(result2).toBe(` ${chalk.dim('-')} `);
+  expect(result1).toBe(` ${color.dim('-----')} `);
+  expect(result2).toBe(` ${color.dim('-')} `);
 });
 
 it('getCurrentRegistry', async () => {
