@@ -1,4 +1,5 @@
 const path = require('path');
+const os = require('os');
 const REGISTRIES = require('../registries.json');
 
 const HOME = 'home';
@@ -8,7 +9,7 @@ const REGISTRY = 'registry';
 const REPOSITORY = 'repository';
 const ALWAYS_AUTH = 'always-auth';
 const REGISTRY_ATTRS = [REGISTRY, HOME, AUTH, ALWAYS_AUTH];
-const HOME_PATH = process.env[(process.platform === 'win32') ? 'USERPROFILE' : 'HOME'];
+const HOME_PATH = os.homedir();
 const NRMRC = path.join(HOME_PATH, '.nrmrc');
 const NPMRC = path.join(HOME_PATH, '.npmrc');
 const NRM_REMOTE_CONFIG = path.join(HOME_PATH, '.npmrc_remote.json');

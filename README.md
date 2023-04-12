@@ -17,8 +17,11 @@ Or you can configure it in your HOME directory's .yarnrc
 
 ## Install
 
-```
-$ npm install -g @lzwme/nrm
+```bash
+npm install -g @lzwme/nrm
+
+# or install from github repo
+npm install -g renxia/nrm
 ```
 
 ## Example
