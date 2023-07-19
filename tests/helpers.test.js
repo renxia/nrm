@@ -51,7 +51,7 @@ it('geneDashLine', () => {
 });
 
 it('getCurrentRegistry', async () => {
-  const registry = ' https://registry.npmjs.org/';
+  const registry = ' https://registry.npmjs.com/';
   writeFileSync(NPMRC, ini.stringify({ [REGISTRY]: registry }));
   const currentRegistry = await helpers.getCurrentRegistry();
   expect(currentRegistry).toBe(registry);
