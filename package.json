@@ -40,10 +40,10 @@
     "src"
   ],
   "dependencies": {
-    "@lzwme/fe-utils": "^1.5.5",
-    "commander": "^11.0.0",
+    "@lzwme/fe-utils": "^1.6.0",
+    "commander": "^11.1.0",
     "ini": "^4.1.1",
-    "open": "^9.1.0"
+    "open": "^10.0.3"
   },
   "devDependencies": {
     "jest": "^29.7.0",
